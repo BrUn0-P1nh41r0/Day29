@@ -1,4 +1,5 @@
 import pyperclip
+import json
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
@@ -30,16 +31,31 @@ def save():
     wb_get=wb_entry.get()
     eu_get=eu_entry.get()
     pw_get=pw_entry.get()
+    new_data = {
+        wb_get:{
+            "email": eu_get,
+            "password": pw_get
+        }
+    }
 
     if len(wb_get) == 0 or len(eu_get) == 0 or len(pw_get) == 0:
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty! ")
     else:
-        is_ok = messagebox.askokcancel(title=wb_get, message=f"These are the details entered: \nEmail: {eu_get}"
-                                                             f"\nPassword: {pw_get} \nIs it ok to save?")
-        if is_ok:
-            with open("data.txt", mode="a") as data_filed:
-                data_filed.write(f"{wb_get} | {eu_get} | {pw_get}\n")
-            clear_data()
+        try:
+            with open("data.json", mode="r") as data_file:
+                #Reading old data
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", mode = "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            # Updating old data with new data
+            data.update(new_data)
+            with open("data.json", mode="w") as data_file:
+                #Saving new data
+                json.dump(data, data_file, indent=4)
+
+        clear_data()
 
 def clear_data():
     wb_entry.delete(0,END)
