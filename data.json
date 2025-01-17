@@ -1,0 +1,18 @@
+{
+    "Amazon": {
+        "email": "test@test.com",
+        "password": "*6&oM!b3yd6y"
+    },
+    "Ebay": {
+        "email": "test@test.com",
+        "password": "hdS32)6!GCv+g"
+    },
+    "Facebook": {
+        "email": "test@test.com",
+        "password": "3(9xPA8NRgL9$z"
+    },
+    "YouTube": {
+        "email": "test@test.com",
+        "password": "p9(%4dX%XxZ)s"
+    }
+}

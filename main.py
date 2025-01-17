@@ -63,7 +63,22 @@ def clear_data():
     eu_entry.insert(0, "bpinheiro@live.com.pt")
     pw_entry.delete(0,END)
 
-
+# ------------------------ PASSWORD FINDER ---------------------------- #
+def find_password():
+    wb_got = wb_entry.get()
+    try:
+        with open("data.json", mode="r") as data_file:
+            # Reading old data
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showerror(title = "Error", message="No Data File Found.")
+    else:
+        if wb_got in data:
+            email = data[wb_got]["email"]
+            password = data[wb_got]["password"]
+            messagebox.showinfo(title="Info", message=f"Email: {email} \nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {wb_got} exists.")
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
@@ -87,11 +102,11 @@ pw_label.grid(column=0, row=3)
 
 
 #Entry
-wb_entry = Entry(width=35)
-wb_entry.grid(column=1, row=1, columnspan=2)
+wb_entry = Entry(width=21)
+wb_entry.grid(column=1, row=1)
 wb_entry.focus()
 
-eu_entry = Entry(width=35)
+eu_entry = Entry(width=38)
 eu_entry.grid(column=1, row=2, columnspan=2)
 eu_entry.insert(0, "bpinheiro@live.com.pt")
 
@@ -106,6 +121,7 @@ gpw_button.grid(column=2, row=3)
 add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2)
 
-
+search_button = Button(text="Search", width=13, command=find_password)
+search_button.grid(column = 2, row = 1)
 
 window.mainloop()
